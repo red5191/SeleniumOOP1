@@ -18,15 +18,19 @@ from selenium import webdriver
 from selenium.webdriver.chrome.service import Service as ChromeService
 from webdriver_manager.chrome import ChromeDriverManager
 
-options = webdriver.ChromeOptions()
-options.add_experimental_option("detach",True)
-# options.add_argument('--headless')
 base_url = 'https://www.saucedemo.com/'
+
 
 class AutoTest:
 
-    def driver_start(self, link):
-        self.driver = webdriver.Chrome(options=options, service=ChromeService(ChromeDriverManager().install()))
+    def __init__(self):
+        options = webdriver.ChromeOptions()
+        options.add_experimental_option("detach", True)
+        # options.add_argument('--headless')
+        driver = webdriver.Chrome(options=options, service=ChromeService(ChromeDriverManager().install()))
+        self.driver = driver
+
+    def test_start(self, link):
         self.driver.get(link)
         self.driver.maximize_window()
 
@@ -34,6 +38,7 @@ class AutoTest:
         time.sleep(5)
         self.driver.quit()
 
+
 test = AutoTest()
-test.driver_start(base_url)
+test.test_start(base_url)
 test.test_end()
